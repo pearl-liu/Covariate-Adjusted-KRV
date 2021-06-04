@@ -1,0 +1,193 @@
+---
+title: "Covariate-adjusted kernel RV test"
+output: rmarkdown::html_vignette
+vignette: > 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteIndexEntry{Covariate-adjusted kernel RV test}
+   \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width=4.5, fig.height=4,dpi=120)
+```
+
+## Contents
+* Overview
+* System requirements
+* Installation guide
+* Demo and instructions for use
+* Reproduction of simulation results
+* References
+
+## Overview
+The covariate-adjusted kernel RV (KRV) test evaluates the generalized association between two multivariate (potentially high-dimensional) variables, while adjusting for covariates. It is implemented as part of the `KRV()` function in the [MiRKAT R package](https://CRAN.R-project.org/package=MiRKAT), which is a comprehensive R package for association analysis of microbiome data. We introduce the usage of the `KRV()` function and demonstrate its application in genetic association analysis of microbiome composition.
+
+## System Requirements
+
+### Operating systems
+The MiRKAT package (v1.1.3) operates in R with version 3.5.0 or higher. \n
+The package is successfully tested on the following systems: \n
+
+Mac OSX: Mojave version 10.14.6 (R version 4.0.2) \n
+
+Windows 10 version 1809 (R version 3.6.1) \n
+
+### Package dependencies
+The following R packages are required for functions and examples in the MiRKAT package: MASS, GUniFrac, CompQuadForm, quantreg, PearsonDS, propr, lme4, Matrix, permute, survival, and stats. All of these packages are available on [CRAN](https://cran.r-project.org/).
+
+## Installation guide
+The MiRKAT package can be downloaded and installed from CRAN.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+install.packages("MiRKAT")
+
+```
+
+```{r message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+system.time( install.packages("MiRKAT") )
+
+```
+The install time is approximately 2 seconds on a laptop (2.7 GHz Intel Core i7).
+
+We can then load the package:
+```{r message=FALSE, warning=FALSE}
+library(MiRKAT)
+
+```
+
+
+
+##  Demo and instructions for use
+### Overview of covariate-adjusted KRV
+Suppose we have two multivariate variables $G$ and $M$ measured on $n$ individuals. We can construct a pairwise similarity matrix (called kernel matrix), $\mathbf{K}_G$, for variable $G$ and another kernel matrix, $\mathbf{K}_M$, for variable $M$.  
+
+Suppose we also have a set of covariates $X$ measured on these individuals. Let $\mathbf{X}$ be the covariates matrix that includes a column of 1's. Let $\mathbf{P}_X = \mathbf{X} (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T$ be the projection matrix onto the column space of $\mathbf{X}$ and set $\mathbf{P}_{X}^\perp := \mathbf{I} - \mathbf{P}_{X}$.
+
+The KRV coefficient that evaluates the covariate-adjusted relationship between $G$ and $M$ is of the form:
+\begin{equation}
+\text{KRV}_{adj} (G, M) := \frac{tr(\mathbf{P}_{X}^\perp \mathbf{K}_G \mathbf{P}_{X}^\perp \mathbf{K}_M )}{\sqrt{ tr(\mathbf{P}_{X}^\perp \mathbf{K}_G \mathbf{P}_{X}^\perp \mathbf{K}_M ) tr( \mathbf{P}_{X}^\perp \mathbf{K}_G \mathbf{P}_{X}^\perp \mathbf{K}_M )  }}.
+\end{equation} 
+
+Intuitively, the KRV coefficient compares similarity in $G$ to similarity in $M$ across all pairs of individuals. A large KRV coefficient indicates that the pairwise similarity pattern in $G$ well resembles the pairwise similarity pattern in $M$, which implies that the two variables $G$ and $M$ are associated with each other.
+
+To perform hypothesis testing, the permutation distribution of the KRV statistic under the null hypothesis of no association is approximated by a Pearson Type III distribution, allowing us to obtain a p-value. 
+
+### Demo
+Here we consider $G$ to be the genotypes of multiple genetic variants within a specific gene, and $M$ to be the abundances of various microbial taxa that form the microbiota. We give an example of the covariate-adjusted KRV analysis.
+
+We can obtain abundance data of 856 operatioinal taxonomic units (OTUs) in 60 individuals from a real upper-respiratory-tract microbiome data set (Charlson et al. 2010) that is incorporated in the MiRKAT package. We rarefy the count data and construct a Bray-Curtis microbiome kernel.
+```{r message=FALSE, warning=FALSE}
+library(GUniFrac)  
+
+data(throat.otu.tab)
+
+set.seed(42)
+otu.tab.rff <- Rarefy(throat.otu.tab)$otu.tab.rff
+D.m <- as.matrix(vegdist(otu.tab.rff , method="bray"))
+K.m = D2K(D.m)  # Bray-Curtis microbiome kernel
+```
+
+We simulate the genotypes of 20 genetic variants for these 60 individuals, and construct a linear genotype kernel.
+```{r message=FALSE, warning=FALSE}
+n <- nrow(throat.otu.tab)
+
+set.seed(42)
+G <- matrix(rbinom(n*20, 2, 0.1), n, 20) # simulated genotype data
+K.g <- G %*% t(G)  # genotype kernel
+```
+
+Covariates can also be obtained from the Charlson data set. Suppose we want to adjust for sex and smoking status.
+```{r message=FALSE, warning=FALSE}
+data(throat.meta)
+
+Sex <- throat.meta$Sex
+Smoker <- throat.meta$SmokingStatus
+Male <- (Sex == "Male")**2
+Smoker <- (Smoker == "Smoker") **2
+cova <- cbind(Male,  Smoker)  
+
+```
+
+Finally, we conducted the covariate-adjusted KRV test using the `KRV()` function of MiRKAT package.
+```{r message=FALSE, warning=FALSE}
+
+KRV(kernels.otu = K.m, kernel.y = K.g, X=cova, adjust.type='both')
+
+```
+
+
+```{r message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+system.time(  KRV(kernels.otu = K.m, kernel.y = K.g, X=cova, adjust.type='both') )
+```
+The run time for the covariate-adjusted KRV test on this example is 0.003 second.
+
+Additional features of the `KRV()` function can be found in the [MiRKAT reference manual](https://cran.r-project.org/web/packages/MiRKAT/MiRKAT.pdf).
+
+## Reproduction of simulation results
+We provide example code: microbiome_GWAS_simulation.R (also at [GitHub](https://github.com/pearl-liu/Covariate-Adjusted-KRV/blob/main/microbiome_GWAS_simulation.R)) to produce simulation results similar to those presented in our paper. For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods. 
+
+The following commands shall be run in the Bash environment (from command line), and the arguments (as well as effect size parameters in the R code) can be modified as needed. It takes approximately 111 minutes to run these commands on a laptop (processor: 2.7 GHz Intel Core i7, memory: 16 GB).
+
+### Simulation to evaluate type I error of unadjusted and adjusted KRV (Table 2)
+```{r, engine = 'bash', eval = FALSE}
+# n: sample size
+# n_sim: number of data sets to simulate
+# n_pop: number of populations for genetic data (default is 2)
+# seed_num: seed number for simulation
+# power: 0 = type I error analysis, 1 = power analysis
+# power_situation: 0 = type I error analysis, 1,2,3 = different power scenarios
+# output_file: name of the output file
+
+Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file='example_type_I_error_simulation_result.csv' 
+```
+
+### Simulation to evaluate power of adjusted KRV and competing methods (Figure 4)
+```{r, engine = 'bash', eval = FALSE}
+Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file='example_power_situation1_simulation_result.csv' 
+
+Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file='example_power_situation2_simulation_result.csv' 
+
+Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file='example_power_situation3_simulation_result.csv' 
+
+
+```
+
+
+### Evaluate the empirical type I error rate and power
+Example output files of the above Bash commands are provided in this folder (also at [GitHub](https://github.com/pearl-liu/Covariate-Adjusted-KRV)). We next return to R and analyze these output files.
+
+The empirical type I error rate is evaluated as following:
+```{r message=FALSE, warning=FALSE}
+library(knitr)
+source("functions.R")
+emp_type_I_error_df <- result_eval(power_ind=0, 
+                                   file_name='example_type_I_error_simulation_result.csv', 
+                                   sig_level=0.05) 
+kable(emp_type_I_error_df, caption = 'Example empirical type I error rate', digits = 3,
+      col.names = c('Kernel', '$\\alpha$', 'Unadjusted KRV', 'Adjusted KRV'))
+
+```
+
+The empirical power (e.g., under Power Scenario 3) is evaluated as following:
+```{r message=FALSE, warning=FALSE}
+emp_power_df <- result_eval(power_ind=1, 
+                            file_name='example_power_situation3_simulation_result.csv', 
+                            sig_level=0.05) 
+power_plot(emp_power_df, power_scenario=3,
+          kernel_name_output = c('Bray-Curtis', 'Unweighted UniFrac', 
+                   'Weighted UniFrac', 'Generalized UniFrac')) 
+
+```
+
+## References
+Charlson, E.S., Chen, J., Custers-Allen, R., Bittinger, K., Li, H., Sinha, R., Hwang, J., Bushman, F.D. and Collman, R.G., 2010. Disordered microbial communities in the upper respiratory tract of cigarette smokers. PloS one, 5(12), p.e15216.
+
+Liu, H., Ling, W., Hua, X., Moon, J., Williams-Nguyen, J., Zhan, X., Plantinga, A.M., Zhao, N., Zhang, A., Durazo-Arvizu, R.A., Knight, R., Qi, Q., Burke, R.D., Kaplan, R.C. and Wu, M.C., 2021. Kernel-based genetic association analysis for microbiome phenotypes identifies host genetic drivers of beta-diversity.
+
+Plantinga, A., Wilson, N., Zheng, H., Zhan, X., Wu, M., Zhao, N. and Chen, J., 2021. MiRKAT: Microbiome Regression-Based Analysis Tests.
+
+Zhan, X., Zhao, N., Plantinga, A., Thornton, T.A., Conneely, K.N., Epstein, M.P. and Wu, M.C., 2017. Powerful genetic association analysis for common or rare variants with high-dimensional structured traits. Genetics, 206(4), pp.1779-1790.
+
+Zhan, X., Plantinga, A., Zhao, N. and Wu, M.C., 2017. A fast small‐sample kernel independence test for microbiome community‐level association analysis. Biometrics, 73(4), pp.1453-1463.
+
