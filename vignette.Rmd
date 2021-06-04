@@ -125,7 +125,7 @@ The run time for the covariate-adjusted KRV test on this example is 0.003 second
 Additional features of the `KRV()` function can be found in the [MiRKAT reference manual](https://cran.r-project.org/web/packages/MiRKAT/MiRKAT.pdf).
 
 ## Reproduction of simulation results
-We provide example code: microbiome_GWAS_simulation.R (also at [GitHub](https://github.com/pearl-liu/Covariate-Adjusted-KRV/blob/main/microbiome_GWAS_simulation.R)) to produce simulation results similar to those presented in our paper. For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods. 
+We provide example code: microbiome_GWAS_simulation.R (also at [GitHub](https://github.com/pearl-liu/Covariate-Adjusted-KRV/blob/main/microbiome_GWAS_simulation.R)) to produce simulation results similar to those presented in our paper (Liu et al. 2021+). For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods. 
 
 The following commands shall be run in the Bash environment (from command line), and the arguments (as well as effect size parameters in the R code) can be modified as needed. It takes approximately 111 minutes to run these commands on a laptop (processor: 2.7 GHz Intel Core i7, memory: 16 GB).
 
@@ -183,11 +183,10 @@ power_plot(emp_power_df, power_scenario=3,
 ## References
 Charlson, E.S., Chen, J., Custers-Allen, R., Bittinger, K., Li, H., Sinha, R., Hwang, J., Bushman, F.D. and Collman, R.G., 2010. Disordered microbial communities in the upper respiratory tract of cigarette smokers. PloS one, 5(12), p.e15216.
 
-Liu, H., Ling, W., Hua, X., Moon, J., Williams-Nguyen, J., Zhan, X., Plantinga, A.M., Zhao, N., Zhang, A., Durazo-Arvizu, R.A., Knight, R., Qi, Q., Burke, R.D., Kaplan, R.C. and Wu, M.C., 2021. Kernel-based genetic association analysis for microbiome phenotypes identifies host genetic drivers of beta-diversity.
+Liu, H., Ling, W., Hua, X., Moon, J., Williams-Nguyen, J., Zhan, X., Plantinga, A.M., Zhao, N., Zhang, A., Durazo-Arvizu, R.A., Knight, R., Qi, Q., Burk, R.D., Kaplan, R.C. and Wu, M.C., 2021+. Kernel-based genetic association analysis for microbiome phenotypes identifies host genetic drivers of beta-diversity.
 
-Plantinga, A., Wilson, N., Zheng, H., Zhan, X., Wu, M., Zhao, N. and Chen, J., 2021. MiRKAT: Microbiome Regression-Based Analysis Tests.
-
-Zhan, X., Zhao, N., Plantinga, A., Thornton, T.A., Conneely, K.N., Epstein, M.P. and Wu, M.C., 2017. Powerful genetic association analysis for common or rare variants with high-dimensional structured traits. Genetics, 206(4), pp.1779-1790.
+Plantinga, A., Wilson, N., Zheng, H., Zhan, X., Wu, M., Zhao, N., Chen, J. and Liu, H., 2021. MiRKAT: Microbiome Regression-Based Analysis Tests.
 
 Zhan, X., Plantinga, A., Zhao, N. and Wu, M.C., 2017. A fast small‐sample kernel independence test for microbiome community‐level association analysis. Biometrics, 73(4), pp.1453-1463.
 
+Zhan, X., Zhao, N., Plantinga, A., Thornton, T.A., Conneely, K.N., Epstein, M.P. and Wu, M.C., 2017. Powerful genetic association analysis for common or rare variants with high-dimensional structured traits. Genetics, 206(4), pp.1779-1790.
