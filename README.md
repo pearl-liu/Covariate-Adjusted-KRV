@@ -1,13 +1,5 @@
 # Covariate-adjusted kernel RV test
 
-## Contents
-* Overview
-* System requirements
-* Installation guide
-* Demo and instructions for use
-* Reproduction of simulation results
-* References
-
 ## Overview
 The covariate-adjusted kernel RV (KRV) test evaluates the generalized association between two multivariate (potentially high-dimensional) variables, while adjusting for covariates. It is implemented as part of the `KRV()` function in the [MiRKAT R package](https://CRAN.R-project.org/package=MiRKAT), which is a comprehensive R package for association analysis of microbiome data. We introduce the usage of the `KRV()` function and demonstrate its application in genetic association analysis of microbiome composition.
 
@@ -29,15 +21,13 @@ The MiRKAT package can be downloaded and installed from CRAN.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 install.packages("MiRKAT")
-
 ```
 The install time is approximately 2 seconds on a laptop (2.7 GHz Intel Core i7).
 
 We can then load the package:
 ```{r message=FALSE, warning=FALSE}
 library(MiRKAT)
-
 ```
 
 ##  Demo and instructions for use
-See ... 
+See the [vignette](https://pearl-liu.github.io/Covariate-Adjusted-KRV/vignette.html).
