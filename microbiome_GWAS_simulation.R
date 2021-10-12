@@ -13,13 +13,9 @@ library(SKAT)
 library(dirmult)
 library(doBy)
 library(svd)
-#library(expm)
-#library(CompQuadForm)
-#library(MiRV)
-#library(RNOmni)
+
 
 source('functions.R')
-source('covariate_adjusted_krv.R')
 
 data("throat.meta")
 data("throat.otu.tab")
@@ -177,7 +173,7 @@ sim_func_KRV <- function(i) {
   
   ## Perform KRV with no adjustment
   p_value_noadj <- mapply(function(x){
-    cov_adj_krv(kernels.otu = x, kernel.y = geno.K)
+    KRV(kernels.otu = x, kernel.y = geno.K)
   }, otu.K.list)
   
   ## Perform adjusted KRV
@@ -190,7 +186,8 @@ sim_func_KRV <- function(i) {
   X <- cbind(1, geno_pca$u)
   
   p_value_adj <- mapply(function(x) {
-                   cov_adj_krv(kernels.otu = x, kernel.y = geno.K, X = X) },
+                   KRV(kernels.otu = x, kernel.y = geno.K, X = X,
+                       adjust.type = 'both') },
                              otu.K.list)
   
   

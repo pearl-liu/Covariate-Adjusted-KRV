@@ -183,7 +183,7 @@ power_plot(emp_power_df, power_scenario=3,
 ## References
 Charlson, E.S., Chen, J., Custers-Allen, R., Bittinger, K., Li, H., Sinha, R., Hwang, J., Bushman, F.D. and Collman, R.G., 2010. Disordered microbial communities in the upper respiratory tract of cigarette smokers. PloS one, 5(12), p.e15216.
 
-Liu, H., Ling, W., Hua, X., Moon, J., Williams-Nguyen, J., Zhan, X., Plantinga, A.M., Zhao, N., Zhang, A., Durazo-Arvizu, R.A., Knight, R., Qi, Q., Burk, R.D., Kaplan, R.C. and Wu, M.C., 2021+. Kernel-based genetic association analysis for microbiome phenotypes identifies host genetic drivers of beta-diversity.
+Liu, H., Ling, W., Hua, X., Moon, J., Williams-Nguyen, J., Zhan, X., Plantinga, A.M., Zhao, N., Zhang, A., Knight, R., Qi, Q., Burk, R.D., Kaplan, R.C. and Wu, M.C., 2021+. Kernel-based genetic association analysis for microbiome phenotypes identifies host genetic drivers of beta-diversity.
 
 Plantinga, A., Wilson, N., Zheng, H., Zhan, X., Wu, M., Zhao, N., Chen, J. and Liu, H., 2021. MiRKAT: Microbiome Regression-Based Analysis Tests.
 
