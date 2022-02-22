@@ -392,11 +392,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb5-5" data-line-number="5">Male &lt;-<span class="st"> </span>(Sex <span class="op">==</span><span class="st"> &quot;Male&quot;</span>)<span class="op">**</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">Smoker &lt;-<span class="st"> </span>(Smoker <span class="op">==</span><span class="st"> &quot;Smoker&quot;</span>) <span class="op">**</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">cova &lt;-<span class="st"> </span><span class="kw">cbind</span>(Male,  Smoker)  </a></code></pre></div>
-<p>Finally, we conducted the covariate-adjusted KRV test using the <code>KRV()</code> function of MiRKAT package.</p>
+<p>Finally, we conduct the covariate-adjusted KRV test using the <code>KRV()</code> function of MiRKAT package.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">KRV</span>(<span class="dt">kernels.otu =</span> K.m, <span class="dt">kernel.y =</span> K.g, <span class="dt">X=</span>cova, <span class="dt">adjust.type=</span><span class="st">'both'</span>)</a></code></pre></div>
 <pre><code>## $p_values
 ## [1] 0.6043428</code></pre>
-<p>The run time for the covariate-adjusted KRV test on this example is 0.003 second.</p>
+<p>The run time for the covariate-adjusted KRV test on this example is 0.003 second (processor: 2.7 GHz Intel Core i7, memory: 16 GB).</p>
 <p>Additional features of the <code>KRV()</code> function can be found in the <a href="https://cran.r-project.org/web/packages/MiRKAT/MiRKAT.pdf">MiRKAT reference manual</a>.</p>
 </div>
 </div>
@@ -414,15 +414,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># power_situation: 0 = type I error analysis, 1,2,3 = different power scenarios</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># output_file: name of the output file</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file=<span class="st">'example_type_I_error_simulation_result.csv'</span> </a></code></pre></div>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file=<span class="st">'simulation_results/example_type_I_error_simulation_result.csv'</span> </a></code></pre></div>
 </div>
 <div id="simulation-to-evaluate-power-of-adjusted-krv-and-competing-methods-figure-4" class="section level3">
 <h3>Simulation to evaluate power of adjusted KRV and competing methods (Figure 4)</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file=<span class="st">'example_power_situation1_simulation_result.csv'</span> </a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file=<span class="st">'simulation_results/example_power_situation1_simulation_result.csv'</span> </a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file=<span class="st">'example_power_situation2_simulation_result.csv'</span> </a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file=<span class="st">'simulation_results/example_power_situation2_simulation_result.csv'</span> </a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file=<span class="st">'example_power_situation3_simulation_result.csv'</span> </a></code></pre></div>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file=<span class="st">'simulation_results/example_power_situation3_simulation_result.csv'</span> </a></code></pre></div>
 </div>
 <div id="evaluate-the-empirical-type-i-error-rate-and-power" class="section level3">
 <h3>Evaluate the empirical type I error rate and power</h3>

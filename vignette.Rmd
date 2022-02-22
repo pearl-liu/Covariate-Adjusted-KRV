@@ -109,7 +109,7 @@ cova <- cbind(Male,  Smoker)
 
 ```
 
-Finally, we conducted the covariate-adjusted KRV test using the `KRV()` function of MiRKAT package.
+Finally, we conduct the covariate-adjusted KRV test using the `KRV()` function of MiRKAT package.
 ```{r message=FALSE, warning=FALSE}
 
 KRV(kernels.otu = K.m, kernel.y = K.g, X=cova, adjust.type='both')
@@ -120,7 +120,7 @@ KRV(kernels.otu = K.m, kernel.y = K.g, X=cova, adjust.type='both')
 ```{r message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
 system.time(  KRV(kernels.otu = K.m, kernel.y = K.g, X=cova, adjust.type='both') )
 ```
-The run time for the covariate-adjusted KRV test on this example is 0.003 second.
+The run time for the covariate-adjusted KRV test on this example is 0.003 second (processor: 2.7 GHz Intel Core i7, memory: 16 GB).
 
 Additional features of the `KRV()` function can be found in the [MiRKAT reference manual](https://cran.r-project.org/web/packages/MiRKAT/MiRKAT.pdf).
 
@@ -139,16 +139,16 @@ The following commands shall be run in the Bash environment (from command line),
 # power_situation: 0 = type I error analysis, 1,2,3 = different power scenarios
 # output_file: name of the output file
 
-Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file='example_type_I_error_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file='simulation_results/example_type_I_error_simulation_result.csv' 
 ```
 
 ### Simulation to evaluate power of adjusted KRV and competing methods (Figure 4)
 ```{r, engine = 'bash', eval = FALSE}
-Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file='example_power_situation1_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file='simulation_results/example_power_situation1_simulation_result.csv' 
 
-Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file='example_power_situation2_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file='simulation_results/example_power_situation2_simulation_result.csv' 
 
-Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file='example_power_situation3_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file='simulation_results/example_power_situation3_simulation_result.csv' 
 
 
 ```
