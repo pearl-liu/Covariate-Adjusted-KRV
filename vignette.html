@@ -337,7 +337,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>System Requirements</h2>
 <div id="operating-systems" class="section level3">
 <h3>Operating systems</h3>
-<p>The MiRKAT package (v1.1.3) operates in R with version 3.5.0 or higher.  The package is successfully tested on the following systems: </p>
+<p>The MiRKAT package (v1.2.1) operates in R with version 3.0.2 or higher.  The package is successfully tested on the following systems: </p>
 <p>Mac OSX: Mojave version 10.14.6 (R version 4.0.2) </p>
 <p>Windows 10 version 1809 (R version 3.6.1) </p>
 </div>
@@ -402,7 +402,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="reproduction-of-simulation-results" class="section level2">
 <h2>Reproduction of simulation results</h2>
-<p>We provide example code: microbiome_GWAS_simulation.R (also at <a href="https://github.com/pearl-liu/Covariate-Adjusted-KRV/blob/main/microbiome_GWAS_simulation.R">GitHub</a>) to produce simulation results similar to those presented in our paper (Liu et al. 2021+). For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods.</p>
+<p>We provide example code: microbiome_GWAS_simulation.R to produce simulation results similar to those presented in our paper (Liu et al. 2021+). For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods.</p>
 <p>The following commands shall be run in the Bash environment (from command line), and the arguments (as well as effect size parameters in the R code) can be modified as needed. It takes approximately 111 minutes to run these commands on a laptop (processor: 2.7 GHz Intel Core i7, memory: 16 GB).</p>
 <div id="simulation-to-evaluate-type-i-error-of-unadjusted-and-adjusted-krv-table-2" class="section level3">
 <h3>Simulation to evaluate type I error of unadjusted and adjusted KRV (Table 2)</h3>
@@ -414,24 +414,24 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># power_situation: 0 = type I error analysis, 1,2,3 = different power scenarios</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># output_file: name of the output file</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="ex">Rscript</span> microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file=<span class="st">'example_type_I_error_simulation_result.csv'</span> </a></code></pre></div>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file=<span class="st">'example_type_I_error_simulation_result.csv'</span> </a></code></pre></div>
 </div>
 <div id="simulation-to-evaluate-power-of-adjusted-krv-and-competing-methods-figure-4" class="section level3">
 <h3>Simulation to evaluate power of adjusted KRV and competing methods (Figure 4)</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">Rscript</span> microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file=<span class="st">'example_power_situation1_simulation_result.csv'</span> </a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file=<span class="st">'example_power_situation1_simulation_result.csv'</span> </a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">Rscript</span> microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file=<span class="st">'example_power_situation2_simulation_result.csv'</span> </a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file=<span class="st">'example_power_situation2_simulation_result.csv'</span> </a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="ex">Rscript</span> microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file=<span class="st">'example_power_situation3_simulation_result.csv'</span> </a></code></pre></div>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="ex">Rscript</span> code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file=<span class="st">'example_power_situation3_simulation_result.csv'</span> </a></code></pre></div>
 </div>
 <div id="evaluate-the-empirical-type-i-error-rate-and-power" class="section level3">
 <h3>Evaluate the empirical type I error rate and power</h3>
-<p>Example output files of the above Bash commands are provided in this folder (also at <a href="https://github.com/pearl-liu/Covariate-Adjusted-KRV">GitHub</a>). We next return to R and analyze these output files.</p>
+<p>Example output files of the above Bash commands are provided in the “simulation_results” folder. We next return to R and analyze these output files.</p>
 <p>The empirical type I error rate is evaluated as following:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(knitr)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">source</span>(<span class="st">&quot;functions.R&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">source</span>(<span class="st">&quot;code/functions.R&quot;</span>)</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">emp_type_I_error_df &lt;-<span class="st"> </span><span class="kw">result_eval</span>(<span class="dt">power_ind=</span><span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">                                   <span class="dt">file_name=</span><span class="st">'example_type_I_error_simulation_result.csv'</span>, </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">                                   <span class="dt">file_name=</span><span class="st">'simulation_results/example_type_I_error_simulation_result.csv'</span>, </a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">                                   <span class="dt">sig_level=</span><span class="fl">0.05</span>) </a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw">kable</span>(emp_type_I_error_df, <span class="dt">caption =</span> <span class="st">'Example empirical type I error rate'</span>, <span class="dt">digits =</span> <span class="dv">3</span>,</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">      <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">'Kernel'</span>, <span class="st">'$</span><span class="ch">\\</span><span class="st">alpha$'</span>, <span class="st">'Unadjusted KRV'</span>, <span class="st">'Adjusted KRV'</span>))</a></code></pre></div>
@@ -474,7 +474,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </table>
 <p>The empirical power (e.g., under Power Scenario 3) is evaluated as following:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">emp_power_df &lt;-<span class="st"> </span><span class="kw">result_eval</span>(<span class="dt">power_ind=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">                            <span class="dt">file_name=</span><span class="st">'example_power_situation3_simulation_result.csv'</span>, </a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">                            <span class="dt">file_name=</span><span class="st">'simulation_results/example_power_situation3_simulation_result.csv'</span>, </a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">                            <span class="dt">sig_level=</span><span class="fl">0.05</span>) </a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw">power_plot</span>(emp_power_df, <span class="dt">power_scenario=</span><span class="dv">3</span>,</a>
 <a class="sourceLine" id="cb11-5" data-line-number="5">          <span class="dt">kernel_name_output =</span> <span class="kw">c</span>(<span class="st">'Bray-Curtis'</span>, <span class="st">'Unweighted UniFrac'</span>, </a>

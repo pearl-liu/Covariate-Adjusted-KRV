@@ -26,7 +26,7 @@ The covariate-adjusted kernel RV (KRV) test evaluates the generalized associatio
 ## System Requirements
 
 ### Operating systems
-The MiRKAT package (v1.1.3) operates in R with version 3.5.0 or higher. \n
+The MiRKAT package (v1.2.1) operates in R with version 3.0.2 or higher. \n
 The package is successfully tested on the following systems: \n
 
 Mac OSX: Mojave version 10.14.6 (R version 4.0.2) \n
@@ -125,7 +125,7 @@ The run time for the covariate-adjusted KRV test on this example is 0.003 second
 Additional features of the `KRV()` function can be found in the [MiRKAT reference manual](https://cran.r-project.org/web/packages/MiRKAT/MiRKAT.pdf).
 
 ## Reproduction of simulation results
-We provide example code: microbiome_GWAS_simulation.R (also at [GitHub](https://github.com/pearl-liu/Covariate-Adjusted-KRV/blob/main/microbiome_GWAS_simulation.R)) to produce simulation results similar to those presented in our paper (Liu et al. 2021+). For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods. 
+We provide example code: microbiome_GWAS_simulation.R to produce simulation results similar to those presented in our paper (Liu et al. 2021+). For illustrative purposes, we consider a sample size of 150, with 600 data sets simulated for type I error evaluation, and 300 data sets simulated for each power scenario. The effect sizes have been adjusted for a clear comparison across methods. 
 
 The following commands shall be run in the Bash environment (from command line), and the arguments (as well as effect size parameters in the R code) can be modified as needed. It takes approximately 111 minutes to run these commands on a laptop (processor: 2.7 GHz Intel Core i7, memory: 16 GB).
 
@@ -139,30 +139,30 @@ The following commands shall be run in the Bash environment (from command line),
 # power_situation: 0 = type I error analysis, 1,2,3 = different power scenarios
 # output_file: name of the output file
 
-Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file='example_type_I_error_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=600 --n_pop=2 --seed_num=123 --power=0  --power_situation=0 --output_file='example_type_I_error_simulation_result.csv' 
 ```
 
 ### Simulation to evaluate power of adjusted KRV and competing methods (Figure 4)
 ```{r, engine = 'bash', eval = FALSE}
-Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file='example_power_situation1_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=1 --output_file='example_power_situation1_simulation_result.csv' 
 
-Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file='example_power_situation2_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=2 --output_file='example_power_situation2_simulation_result.csv' 
 
-Rscript microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file='example_power_situation3_simulation_result.csv' 
+Rscript code/microbiome_GWAS_simulation.R  --n=150  --n_sim=300 --n_pop=2 --seed_num=123 --power=1  --power_situation=3 --output_file='example_power_situation3_simulation_result.csv' 
 
 
 ```
 
 
 ### Evaluate the empirical type I error rate and power
-Example output files of the above Bash commands are provided in this folder (also at [GitHub](https://github.com/pearl-liu/Covariate-Adjusted-KRV)). We next return to R and analyze these output files.
+Example output files of the above Bash commands are provided in the "simulation_results" folder. We next return to R and analyze these output files.
 
 The empirical type I error rate is evaluated as following:
 ```{r message=FALSE, warning=FALSE}
 library(knitr)
-source("functions.R")
+source("code/functions.R")
 emp_type_I_error_df <- result_eval(power_ind=0, 
-                                   file_name='example_type_I_error_simulation_result.csv', 
+                                   file_name='simulation_results/example_type_I_error_simulation_result.csv', 
                                    sig_level=0.05) 
 kable(emp_type_I_error_df, caption = 'Example empirical type I error rate', digits = 3,
       col.names = c('Kernel', '$\\alpha$', 'Unadjusted KRV', 'Adjusted KRV'))
@@ -172,7 +172,7 @@ kable(emp_type_I_error_df, caption = 'Example empirical type I error rate', digi
 The empirical power (e.g., under Power Scenario 3) is evaluated as following:
 ```{r message=FALSE, warning=FALSE}
 emp_power_df <- result_eval(power_ind=1, 
-                            file_name='example_power_situation3_simulation_result.csv', 
+                            file_name='simulation_results/example_power_situation3_simulation_result.csv', 
                             sig_level=0.05) 
 power_plot(emp_power_df, power_scenario=3,
           kernel_name_output = c('Bray-Curtis', 'Unweighted UniFrac', 
